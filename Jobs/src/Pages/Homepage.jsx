@@ -11,7 +11,7 @@ function Homepage() {
 
       <HomeCards />
 
-      <Jobslist />
+      <Jobslist isHome={true} />
 
       <ViewAllJobs />
     </>
