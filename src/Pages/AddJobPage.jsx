@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { JobsContext } from "../Context/Jobs";
 
 function AddJobPage({ addJobsSubmit }) {
   const [title, setTitle] = useState("");
@@ -13,12 +14,19 @@ function AddJobPage({ addJobsSubmit }) {
   const [contactEmail, setContactEmail] = useState("");
   const [contactPhone, setContactPhone] = useState("");
 
+  const { jobsList } = useContext(JobsContext);
+
+  const getNewId = () => {
+    return `${jobsList.length + 1}`;
+  };
+
   const navagite = useNavigate();
 
   const submitForm = (e) => {
     e.preventDefault();
 
     const newJob = {
+      id: getNewId(),
       title,
       type,
       location,

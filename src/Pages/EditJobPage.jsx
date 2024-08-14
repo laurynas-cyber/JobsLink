@@ -1,23 +1,29 @@
-import { useLoaderData, useNavigate, useParams } from "react-router-dom";
-import { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { useContext, useEffect, useLayoutEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { JobsContext } from "../Context/Jobs";
 
 function EditJobPage({ updateJobSubmit }) {
-  const job = useLoaderData();
-  const [title, setTitle] = useState(job.title);
-  const [type, setType] = useState(job.type);
-  const [location, setLocation] = useState(job.location);
-  const [description, setDescription] = useState(job.description);
-  const [salary, setSalary] = useState(job.salary);
-  const [companyName, setCompanyName] = useState(job.company.name);
+  const { jobsList } = useContext(JobsContext);
+
+  const { id } = useParams();
+
+  const [job, setJob] = useState(jobsList.filter((job) => job.id === id));
+
+
+  const [title, setTitle] = useState(job[0].title);
+  const [type, setType] = useState(job[0].type);
+  const [location, setLocation] = useState(job[0].location);
+  const [description, setDescription] = useState(job[0].description);
+  const [salary, setSalary] = useState(job[0].salary);
+  const [companyName, setCompanyName] = useState(job[0].company.name);
   const [companyDescription, setCompanyDescription] = useState(
-    job.company.description
+    job[0].company.description
   );
-  const [contactEmail, setContactEmail] = useState(job.company.contactEmail);
-  const [contactPhone, setContactPhone] = useState(job.company.contactPhone);
+  const [contactEmail, setContactEmail] = useState(job[0].company.contactEmail);
+  const [contactPhone, setContactPhone] = useState(job[0].company.contactPhone);
 
   const navagite = useNavigate();
-  const { id } = useParams();
 
   const submitForm = (e) => {
     e.preventDefault();
